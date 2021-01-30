@@ -19,3 +19,4 @@ copy2("util_files/infer.py", "Yet-Another-EfficientDet-Pytorch/infer.py")
 os_command("conda env create -f util_files/environment.yml")
 
 #Now run /pathtomyenvs/envs/FishDet/bin/python Interface.py to use
+#Or run conda activate FishDetection followed by Interface.py 
