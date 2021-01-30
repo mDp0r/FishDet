@@ -1,4 +1,4 @@
-name: base
+name: FishDet
 channels:
   - defaults
 dependencies:
@@ -338,4 +338,3 @@ dependencies:
     - torch==1.4.0
     - torchvision==0.5.0
     - webcolors==1.11.1
-prefix: /home/mario/anaconda3
