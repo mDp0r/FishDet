@@ -1,0 +1,14 @@
+project_name: deepfish  # also the folder name of the dataset that under data_path folder
+train_set: train
+val_set: val
+num_gpus: 1
+
+# mean and std in RGB order, actually this part should remain unchanged as long as your dataset is similar to coco. Changed !!!
+mean: [0.326, 0.542, 0.547]
+std: [0.172, 0.08, 0.078]
+
+# this anchor is adapted to the dataset
+anchors_scales: '[2 ** 0, 2 ** (1.0 / 3.0), 2 ** (2.0 / 3.0)]'
+anchors_ratios: '[(1.0, 1.0), (1.4, 0.7), (0.7, 1.4)]'
+
+obj_list: ['fish']
