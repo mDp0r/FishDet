@@ -6,7 +6,8 @@ import json
 from shutil import copytree, copy2, rmtree
 import urllib.request
 import tarfile
-
+import argparse
+import yaml
 """
 Generell: 
 
@@ -191,6 +192,7 @@ class known_creator:
         urllib.request.urlretrieve(url, filename = "deepfish.tar")
         
     def unzip_deepfish(self):
+        print("Unzipping")
         tar = tarfile.open("deepfish.tar", "r:")
         tar.extractall()
         tar.close()
@@ -220,11 +222,13 @@ class known_creator:
         return
     
     def copy_util_files(self):
+        print("Copying util files")
         copy2("util_files/deepfish.yml", "Yet-Another-EfficientDet-Pytorch/projects/")
         copytree("util_files/deepfish_annos/annotations/", "Yet-Another-EfficientDet-Pytorch/datasets/deepfish/annotations/")
         return
     
     def cleanup(self):
+        print("Cleaning up")
         os.remove("deepfish.tar")
         rmtree("DeepFish" )
         return
@@ -238,7 +242,7 @@ def get_inputs():
     parser.add_argument("--path", action="store", dest="path", type=str, \
 default = None)
     parser.add_argument("--mode", action="store", dest="mode", type=str, \
-default = "coco")
+default = None)
     #Return parsed object
     return parser.parse_args()
 
