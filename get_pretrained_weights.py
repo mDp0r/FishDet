@@ -9,3 +9,5 @@ urls = ['https://github.com/zylo117/Yet-Another-Efficient-Pytorch/releases/downl
 
 for url in urls:
     urllib.request.urlretrieve(url, filename = folder+url.split("/")[-1])
+    
+urllib.request.urlretrieve("https://drive.google.com/uc?id=1VV60BNwRXGl3G1kX3sJfAImI7BC55sPD&export=download", filename = folder + "FishDet.pth")
