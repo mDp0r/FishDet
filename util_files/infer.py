@@ -73,8 +73,7 @@ class FishPred:
             os.mkdir(session_path+"coco_annos/annotations/")
             os.mkdir(session_path+"coco_annos/train/")
             os.mkdir(session_path+"coco_annos/val/")
-        
-        
+            
         return session_path
     
     
@@ -94,8 +93,8 @@ class FishPred:
         if self.mode == "all":
             print("Writing COCO Annos")
             self.__write_coco()
-#             print("Writing LOST Annos")
-#             self.__write_lost()
+            print("Writing LOST Annos")
+            self.__write_lost()
             print("Saving Images with Bboxes")
             self.__viz()
             
@@ -103,9 +102,9 @@ class FishPred:
             print("Writing COCO Annos")
             self.__write_coco()
             
-#         elif self.mode =="lost":
-#             print("Writing LOST Annos")
-#             self.__write_lost()
+        elif self.mode =="lost":
+            print("Writing LOST Annos")
+            self.__write_lost()
             
         elif self.mode == "viz":
             print("Saving Images with Bboxes")
@@ -324,6 +323,38 @@ class FishPred:
         as outfile:
             json.dump(full_json, outfile)
         return
+    
+    def __write_lost(self):
+        self.lost_annos = self.__format_bbox_lost(self.results)
+        self.lost_annos = self.__format_output_lost(self.lost_annos)
+        self.__write_output_lost(self.lost_annos)
+        
+        return
+    
+    def __format_bbox_lost(self, annos):
+        annos["x"] = annos["x"].copy()+0.5*annos["width"].copy()
+        annos["y"] = annos["y"].copy()+0.5*annos["height"].copy()
+        annos["im_width"] = annos["img_pth"].apply(lambda x: Image.open(x).width)
+        annos["im_height"] = annos["img_pth"].apply(lambda x: Image.open(x).height)
+        annos["x"] = annos["x"].copy() / annos["im_width"].copy()
+        annos["width"] = annos["width"].copy() / annos["im_width"].copy()
+        annos["y"] = annos["y"].copy() / annos["im_height"].copy()
+        annos["height"] = annos["height"].copy() / annos["im_height"].copy()
+        annos["anno.data"] = annos.apply(lambda x:json.dumps({'x':x["x"], 'y':x["y"], 'w':x["width"], 'h':x["height"]}) , axis=1)
+        return annos
+    
+    def __format_output_lost(self,annos):
+        annos = annos.copy().loc[:,["anno.data", "category_id", "img_pth"]]
+        annos = annos.copy().rename(columns = {"category_id":"anno.lbl.external_id", "img_pth":"img.img_path"})
+        annos["anno.lbl.name"] = annos["anno.lbl.external_id"].apply(lambda x: json.dumps([self.p_params["obj_list"][x-1]]))
+        annos["anno.lbl.external_id"] = annos["anno.lbl.external_id"].apply(lambda x: json.dumps([str(x)]))
+        return annos
+    
+    def __write_output_lost(self, annos):
+        annos.to_csv(self.session+"lost_annos.csv", index=False)
+        return
+        
+    
     
 if __name__ == "__main__":
     args = parse_arguments()

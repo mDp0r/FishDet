@@ -22,7 +22,7 @@ class FishDet:
         num_epochs: Type int /needed for train
         detector: Type String, So far only EfficientDet supported
         c: Compound param of EfficientDet, should be None if not EfficientDet
-        ds_name: Type String, See folder name in /datasets of EfficientDet Pytorch so far,
+        project: Type String, See folder name in /datasets and filename of yaml in projects of EfficientDet Pytorch so far,
         load_weights: Type String, Default None, otherwise name of .pth File
         head_only: Type Bool, default True
         optim: Type String, default adamw, sgd also supported /used for train
@@ -40,9 +40,9 @@ class FishDet:
         #Set Input as attributes
         self.do = args.do
         self.detector = args.detector
-        self.ds_name = args.ds_name
+        self.project = args.project
         self.load_weights = args.load_weights
-        self.ds_name = args.ds_name
+        self.project = args.project
         self.head_only = args.head_only
         self.batch_size = args.batch_size
         self.lr = args.lr
@@ -163,7 +163,7 @@ class FishDet:
             
         #Add rest of arguments
         cmd += " --batch_size " + str(self.batch_size) + " --lr " + str(self.lr) + \
-        " --num_epochs " + str(self.num_epochs) + " -p " + str(self.ds_name) + \
+        " --num_epochs " + str(self.num_epochs) + " -p " + str(self.project) + \
         " --num_workers 0" + " -c " + str(self.c) \
         + "--save_interval " + str(sys.maxsize) 
     
@@ -239,7 +239,7 @@ class FishDet:
     
     """
     def __get_EfficientDet_eval_command(self): 
-        return "python -u coco_eval.py" + " -c " + str(self.c)+ " -p " + str(self.ds_name) + " -w weights/" + str(self.load_weights)
+        return "python -u coco_eval.py" + " -c " + str(self.c)+ " -p " + str(self.project) + " -w weights/" + str(self.load_weights)
     
     """
     infer method:
@@ -285,7 +285,7 @@ class FishDet:
     
     """
     def __get_EfficientDet_infer_command(self): 
-        return "python -u infer.py" + " --c " + str(self.c)+ " --p " + str(self.ds_name) + " --w weights/" + str(self.load_weights) + \
+        return "python -u infer.py" + " --c " + str(self.c)+ " --p " + str(self.project) + " --w weights/" + str(self.load_weights) + \
     " --mode " + str(self.infer_mode) + " --path " + str(self.path) + " --conf_threshold " + str(self.conf_threshold)
     
     
@@ -314,7 +314,7 @@ default = None)
 default = None)
     parser.add_argument("--detector", action="store", dest = "detector", default = "EfficientDet")
     parser.add_argument("--c", action="store", dest = "c", type=int, default = None)
-    parser.add_argument("--ds_name", action="store", dest = "ds_name", default = None)
+    parser.add_argument("--project", action="store", dest = "project", default = None)
     parser.add_argument("--load_weights", action="store", dest = "load_weights", \
 default = None)
     parser.add_argument("--head_only", action="store", dest="head_only", type=bool, \
