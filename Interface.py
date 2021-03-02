@@ -165,7 +165,8 @@ class FishDet:
         cmd += " --batch_size " + str(self.batch_size) + " --lr " + str(self.lr) + \
         " --num_epochs " + str(self.num_epochs) + " -p " + str(self.project) + \
         " --num_workers 0" + " -c " + str(self.c) \
-        + "--save_interval " + str(sys.maxsize) 
+        + " --save_interval " + str(sys.maxsize) \
+        + " --es_patience " + str(1) \
     
         return cmd
         
