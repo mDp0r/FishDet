@@ -9,8 +9,8 @@ class ExportCsv(script.Script):
     '''
     def main(self):
         df = self.inp.to_df()
-        anno_path = "home/lost/FishDet/annos_out/"
-        filename = "annos_"+datetime.datetime.today().strftime("%y%m%d%H%M")
+        anno_path = "/home/lost/FishDet/annos_out/"
+        filename = "annos_"+datetime.datetime.today().strftime("%y%m%d%H%M") +".csv"
         csv_path = anno_path+filename
         df.to_csv(path_or_buf=csv_path,
                       sep=',',

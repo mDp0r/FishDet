@@ -75,7 +75,7 @@ class RequestAnnos(script.Script):
         if (last_processed_timestamp) and (last_processed_timestamp>=latest_timestamp):
             #Sleep and kill script
             self.logger.info('Waiting for new annotations.')
-            time.sleep(3600)
+            time.sleep(60)
             self.reject_execution()
         else:
             annos = pd.read_csv(latest_anno_path)
