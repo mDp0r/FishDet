@@ -112,6 +112,12 @@ python Interface.py --do train --project {name of project/dataset} --c {compound
 
 Best weights will be the newest .pth file in Yet-another-EfficientDet/logs/{ds_name}
 
+<h1>Eval EfficientDet</h1>
+
+Does COCO Style evaluation on dataset. 
+
+ python Interface.py --do eval --project {name of project/ds} --load_weights {.pth file in Yet-another-EfficientDet/weights/} --detector EfficientDet --c {compound_coefficient}
+
 <h1>Predict using EfficientDet</h1>
 
 python Interface.py --do infer --project {name of project/dataset} --c {compound_coefficient} --load_weights {weights in Yet-another-EfficientDet/weights. If ommited will throw error} --detector EfficientDet --infer_mode { Must be in ["lost", "coco", "viz", "all"]. Lost creates lost style annotations, coco creates coco style annotations, viz saves the images plus draws bboxes in them, all does everything} --path {path/to/images/ to do inference on} --conf_threshold {confidence threshold. Will be used to filter bboxes by confidence}
