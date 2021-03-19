@@ -1,0 +1,3 @@
+idx,name,description,external_id,parent_leaf_id,is_root
+0,fishtree,fish labeltree,,,True
+1,fish,Fish Label,1,0,
