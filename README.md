@@ -1,4 +1,4 @@
-<h1>Other Repos repos used</h1>
+<h1>Other Repos used</h1>
 
 https://github.com/zylo117/Yet-Another-EfficientDet-Pytorch
 
