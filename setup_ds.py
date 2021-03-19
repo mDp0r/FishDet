@@ -370,7 +370,7 @@ class lost_creator:
         self.annos["anno.lbl.name"] = self.annos["anno.lbl.name"].apply(lambda x: literal_eval(x)).str[0]
         self.annos["anno.lbl.external_id"] = self.annos["anno.lbl.external_id"].apply(lambda x: literal_eval(x)).str[0]
         self.annos = self.annos.loc[self.annos["anno.lbl.external_id"].notna()].copy()
-        self.annos["anno.lbl.external_id"].astype(int)
+        self.annos["anno.lbl.external_id"] = self.annos["anno.lbl.external_id"].astype(int)
         self.annos["file_name"] = self.annos["img.img_path"].str.split("/").str[-1]
         self.__create_categories()
         self.annos = self.__format_bbox_coco(self.annos)
