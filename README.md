@@ -18,7 +18,9 @@ The project was intended to create an interface for multiple object detectors fo
 1) python setup_ds.py
 2) conda activate FishDet
 
-<h1>Get pretrained weights (COCO pretrained EfficientDet Weights, plus Deepfish trained FishDet)</h1>
+<h1>Get pretrained weights</h1>
+
+COCO pretrained EfficientDet Weights, plus Deepfish trained FishDet
 
 python get_pretrained_weights.py
 
@@ -59,7 +61,9 @@ Folder structure must be like this
             /imgn
             
 
-<h1>Setup a known dataset for EfficientDet: (So far just Deepfish supported)</h1>
+<h1>Setup a known dataset for EfficientDet</h1>
+
+So far just "deepfish" supported.
 
 python setup_ds.py --mode known --ds_name {ds_name}
 
@@ -67,9 +71,34 @@ python setup_ds.py --mode known --ds_name {ds_name}
 
 This will use the project config I generated with --c 4. Also this will use bbox annotations I generated from the original per pixel annotations.
 
-<h1>Setup a folder with images (for inference purposes)</h1>
+<h1>Setup a folder with images</h1>
+
+For inference purposes.
 
 python setup_ds.py --mode any --ds_name {ds_name} --path {path/to/imagefolder}
+
+<h1> Setup a LOST Style Dataset for EfficientDet</h1>
+
+python setup_ds.py --mode lost --c {compound_coefficient} --ds_name {name of dataset/project}  --path {path/to/LOST/Dataset/Folder} --anno_file {name of anno file. Must be .csv}
+
+<h2>Note</h2>
+
+Directory structure must be as follows:
+
+    /ds_name
+       
+       /annos_out
+       
+            /anno_file
+            
+       /imgs
+            
+            /img1
+            ..
+            /imgn
+       
+   
+
 
 <h1>Combine two COCO Style Datasets</h1>
 
