@@ -126,7 +126,7 @@ python Interface.py --do infer --project {name of project/dataset} --c {compound
 
 <h2>Note</h2>
 
-Inference results can be found in Yet-another-EfficientDet/inference/{timestamp of session}
+Inference results can be found in Yet-another-EfficientDet/inference/{timestamp of session}. Also there is still a bug within "viz" and bboxes might be visualized wrongly
 
 <h1>Using the lost pipeline</h1>
 
