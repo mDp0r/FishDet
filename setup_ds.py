@@ -380,7 +380,7 @@ class lost_creator:
         self.__get_annos_and_img_metadata(self.train)
         
         self.val_img_df, self.val_anno_df, self.val_img_json, self.val_anno_json = \
-        self.__get_annos_and_img_metadata(self.train)
+        self.__get_annos_and_img_metadata(self.val)
         
         self.__create_full_json(self.info_json, self.licenses_json, self.cat_json,\
         self.train_img_json, self.train_anno_json, "instances_train.json")
