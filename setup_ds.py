@@ -95,7 +95,7 @@ class coco_creator:
             self.instances,
             anchors_sizes=ANCHORS_SIZES,
             input_size=INPUT_SIZE,
-            normalizes_bboxes=True,
+            normalizes_bboxes=False,
             num_runs=100,
             num_anchors_ratios=3,
             max_iter=2500,
@@ -316,7 +316,14 @@ class lost_creator:
         annos["width"] = annos["width"].copy() * annos["im_width"].copy()
         annos["y"] = annos["y"].copy() * annos["im_height"].copy()
         annos["height"] = annos["height"].copy() * annos["im_height"].copy()
-        annos["bbox"] = annos.apply(lambda x: [round(x["x"]), round(x["y"]), round(x["width"]),round(x["height"])] , axis=1)
+
+        annos["x"] = annos["x"].round().astype(int)
+        annos["y"] = annos["y"].round().astype(int)
+        annos["width"] = annos["width"].round().astype(int)
+        annos["height"] = annos["height"].round().astype(int)
+        annos = annos.loc[((annos["x"]+annos["width"])< (annos["im_width"])) & ((annos["x"]-annos["width"])>0)].copy()
+        annos = annos.loc[((annos["y"]+annos["height"])< (annos["im_height"])) & ((annos["y"]-annos["height"])>0)].copy()
+        annos["bbox"] = annos.apply(lambda x: [x["x"], x["y"], x["width"],x["height"]] , axis=1)
         return annos
     
     #labels
@@ -432,5 +439,29 @@ if __name__ == "__main__":
     else:
         print("No proper mode specified. Aborting")
     creator.do_pipeline()
+    
+
+# class test_class:
+#     def __init__(self, *args, **kwargs):
+#         self.__dict__.update(kwargs)
+        
+# test_dic = {"mode":"coco", "path":"/home/mario/Test_FishDet/FishDet/fishes_2103231818/","c":4, "ds_name":"fishes_2103231818"}
+# parsed_args = test_class(**test_dic)
+# if parsed_args.mode == "coco":
+#     creator = coco_creator(parsed_args)
+    
+# elif parsed_args.mode == "any":
+#     creator = any_creator(parsed_args)
+    
+# elif parsed_args.mode =="known":
+#     creator = known_creator(parsed_args)
+
+# elif parsed_args.mode == "lost":
+#     creator = lost_creator(parsed_args)
+    
+# else:
+#     print("No proper mode specified. Aborting")
+# creator.do_pipeline()
+    
     
     

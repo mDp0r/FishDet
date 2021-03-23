@@ -91,12 +91,13 @@ class FishPred:
         self.__predict()
         print("Mode "+self.mode+" seletected")
         if self.mode == "all":
+            print("Saving Images with Bboxes")
+            self.__viz()
             print("Writing COCO Annos")
             self.__write_coco()
             print("Writing LOST Annos")
             self.__write_lost()
-            print("Saving Images with Bboxes")
-            self.__viz()
+            
             
         elif self.mode =="coco":
             print("Writing COCO Annos")
@@ -191,7 +192,12 @@ class FishPred:
         self.results ["x"] = self.results["bbox"].apply(lambda x : x[0])
         self.results ["y"] = self.results["bbox"].apply(lambda x : x[1])
         self.results ["width"] = self.results["bbox"].apply(lambda x : x[2])
-        self.results["height"] = self.results["bbox"].apply(lambda x : x[2])
+        self.results["height"] = self.results["bbox"].apply(lambda x : x[3])
+        self.results["im_height"] = self.results["img_pth"].apply(lambda x: Image.open(x).height)
+        self.results["im_width"] = self.results["img_pth"].apply(lambda x: Image.open(x).width)
+        self.results = self.results.loc[((self.results["x"]+self.results["width"])< (self.results["im_width"])) & ((self.results["x"]-self.results["width"])>0)].copy()
+        self.results = self.results.loc[((self.results["y"]+self.results["height"])< (self.results["im_height"])) & ((self.results["y"]-self.results["height"])>0)].copy()
+        self.results = self.results.drop(columns = ["im_height", "im_width"])
        
     def __viz(self):
         for temp_path in tqdm(self.results["img_pth"].unique()):
