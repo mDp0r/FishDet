@@ -105,7 +105,7 @@ if __name__ == "__main__":
             os_command(f"python combine_ds.py --ds1 deepfish --ds2 {ds_name} --ds_name {ds_name2} --c 4 ")
             #train
             print("Starting training...This might take a while")
-            os_command(f"python Interface.py --do train --project {ds_name2} --c 4 --load_weights efficientdet-d4.pth --detector EfficientDet --batch_size 1 --lr 1e-4 --num_epochs 10")
+            os_command(f"python Interface.py --do train --project {ds_name2} --c 4 --load_weights efficientdet-d4.pth --detector EfficientDet --batch_size 1 --lr 1e-4 --num_epochs 120")
             #copy best model to weights
             print("Copying best model to weights")
             train_weights_path = f"Yet-Another-EfficientDet-Pytorch/logs/{ds_name2}/"
