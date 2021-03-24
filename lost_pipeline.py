@@ -73,11 +73,12 @@ if __name__ == "__main__":
     tracking_path = fishdet_path+"anno_out_tracking.txt"
     anno_dir_path = fishdet_path+"annos_out/"
 
-    latest_anno_path = get_latest(anno_dir_path)
-    latest_timestamp = get_timestamp(latest_anno_path)
+    
 
 
     while(True):
+        latest_anno_path = get_latest(anno_dir_path)
+        latest_timestamp = get_timestamp(latest_anno_path)
 
         if os.path.exists(tracking_path):
             with open (tracking_path) as file:
@@ -95,16 +96,16 @@ if __name__ == "__main__":
             #setup lost ds from annos
             ds_name = "fishes_" + datetime.datetime.today().strftime("%y%m%d%H%M")
             ds_name2 = "deepfishes_" + datetime.datetime.today().strftime("%y%m%d%H%M")
-            last_processed_file = last_processed.split("/")[-1]
+            latest_anno_file = latest_anno_path.split("/")[-1]
             print("Setting up coco style dataset from lost annos. Also integrating it into efficientdet. For params see above command")
-            os_command(f"python setup_ds.py --mode lost --c 4 --ds_name {ds_name} --anno_file {last_processed_file} --path {fishdet_path}")
+            os_command(f"python setup_ds.py --mode lost --c 4 --ds_name {ds_name} --anno_file {latest_anno_file} --path {fishdet_path}")
             #combine with deepfish annos
             print("Setting up coco style dataset as combination of deepfish and new fish annos.\
             Also integrating it into efficientdet. For params see above command")
             os_command(f"python combine_ds.py --ds1 deepfish --ds2 {ds_name} --ds_name {ds_name2} --c 4 ")
             #train
             print("Starting training...This might take a while")
-            os_command(f"python Interface.py --do train --project {ds_name2} --c 4 --load_weights efficientdet-d4.pth --detector EfficientDet --batch_size 1 --lr 1e-4 --num_epochs 120")
+            os_command(f"python Interface.py --do train --project {ds_name2} --c 4 --load_weights efficientdet-d4.pth --detector EfficientDet --batch_size 1 --lr 1e-4 --num_epochs 10")
             #copy best model to weights
             print("Copying best model to weights")
             train_weights_path = f"Yet-Another-EfficientDet-Pytorch/logs/{ds_name2}/"
