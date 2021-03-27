@@ -13,7 +13,22 @@ https://github.com/l3p-cv/lost
 
 <h1>General Notes</h1>
 
-The project was intended to create an interface for multiple object detectors for fish detection. Due to time issues we just implemented one detector (EfficientDet). Also the utilities are so far just hardcoded for EfficientDet use.
+The project was intended to create an interface for multiple object detectors for fish detection. Due to time issues we just implemented one detector (EfficientDet). Also the utilities are so far just hardcoded for EfficientDet use. We conducted several experiments on different fish datasets. We also used publicly available datasets such as fish 4 knowledge and deepfish. 
+
+<h1> Experiments </h1>
+Here are the mAPs we managed to achieve with this implementation of the efficientdet.
+
+<h2> D0 on Fish 4 Knowledge </h2>
+mAP50:95 16,7, mAP50 29,7. (Single Class)
+
+mAP50:95 9,7 , mAP50 15,5 (all classes)
+
+<h2> D4 on Fish 4 Knowledge </h2>
+mAP50:95 26, mAP50 41,4. (Single Class)
+
+<h2> D4 on Deepfish </h2>
+mAP50:95 73, mAP50 93. (Single Class)
+
 
 <h1>Initialize Repository</h1>
 
